@@ -1,8 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Android Build
+name: Build
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -15,7 +15,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   buildAndroid:
     name: buildAndroid
     runs-on: ubuntu-latest
@@ -47,17 +46,19 @@ jobs:
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null
           haxelib install lime
-          haxelib install hxCodec
-          haxelib install openfl
-          haxelib --never install flixel
+          haxelib install openfl 9.0.2
+          haxelib --never install flixel 4.11.0
           haxelib run lime setup flixel
           haxelib install flixel-tools
           haxelib install flixel-ui
           haxelib install hscript
           haxelib install flixel-addons
-          haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git --quiet 
-          haxelib git extension-webm https://github.com/Sirox228/extension-webm
-          haxelib install actuate
+          haxelib install newgrounds
+          haxelib git polymod https://github.com/MasterEric/polymod.git
+          haxelib git extension-videoview https://github.com/MAJigsaw77/extension-videoview
+          haxelib git hxCodec https://github.com/polybiusproxy/hxcodec
+          haxelib git linc_luajit https://github.com/majigsaw77/linc_luajit.git
+          haxelib git extension-androidtools https://github.com/majigsaw77/extension-androidtools.git
           haxelib list
 
       - name: Create Version Tag
@@ -79,5 +80,5 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Android Build
+          name: androidBuild
           path: export/release/android/bin/app/build/outputs/apk/debug
